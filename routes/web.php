@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-
+use Inertia\Inertia;
+use Laravel\Fortify\Fortify;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('public.home');
+    /*return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);*/
 });
+
+Auth::routes();
+
+Route::get('/dashboard',function () {
+    return view('dashboard.dashboard');
+});
+Route::resource('items', ItemController::class);
